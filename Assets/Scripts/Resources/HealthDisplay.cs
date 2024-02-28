@@ -18,7 +18,7 @@ namespace RPG.Resources
         }
         void Update()
         {
-            string healthValue = String.Format("{0:0}%", health.GetPercentage());
+            string healthValue = String.Format("{0:0}/{1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
             healtText.SetText(healthValue);
         
         }

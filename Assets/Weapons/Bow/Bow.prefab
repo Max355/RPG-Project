@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333198400585999346}
+  - component: {fileID: 4256118950096658626}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -32,6 +33,18 @@ Transform:
   - {fileID: 1118961882968600649}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4256118950096658626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6231972121115808145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6e6f68a361e9c45be4dabbff541f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1119263782015436355
 PrefabInstance:
   m_ObjectHideFlags: 0

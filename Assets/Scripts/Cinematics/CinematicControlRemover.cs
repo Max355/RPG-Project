@@ -23,7 +23,7 @@ namespace PRG.Cinematics
 
         private void OnDisable()
         {
-             GetComponent<PlayableDirector>().played -= DisableControl;
+            GetComponent<PlayableDirector>().played -= DisableControl;
             GetComponent<PlayableDirector>().stopped -= EnableControl;
         }
 

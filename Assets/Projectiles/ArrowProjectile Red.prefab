@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1472080523071766119, guid: 57216542aec64dd4dadc8180043c6c02, type: 3}
+      propertyPath: lifeAfterImpact
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5675736418009160758, guid: 57216542aec64dd4dadc8180043c6c02, type: 3}
       propertyPath: m_Name
       value: ArrowProjectile Red

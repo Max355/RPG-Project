@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using RPG.Core;
 using RPG.Stats;
 using UnityEngine;
+using UnityEngine.Events;
+using Newtonsoft.Json.Linq;
+using RPG.Saving;
+
 
 namespace RPG.Resources
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ISaveable//, IJsonSaveable
     {
         [SerializeField] float regenerationPercentage = 70;
+        [SerializeField] UnityEvent onDie;
+        [SerializeField] TakeDamageEvent takeDamage;
+
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+        }
         float healthPoints = -1f;
 
         bool isDead = false;
@@ -19,6 +30,7 @@ namespace RPG.Resources
             {
                 healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
             }  
+            
         }
 
         private void OnEnable()
@@ -38,18 +50,41 @@ namespace RPG.Resources
 
         public void TakeDamage(GameObject instigator, float damage)
         {
+            print(gameObject.name + " took damage: " + damage);
+
+
             healthPoints = Mathf.Max(healthPoints - damage, 0);
-            print(healthPoints);
+            
             if (healthPoints == 0)
             {
+                onDie.Invoke();
                 Die();
                 AwardExperience(instigator);
+            }
+            else
+            {
+                takeDamage.Invoke(damage);
             }
         }
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
+            return 100 * GetFraction();
+        }
+
+        public float GetFraction()
+        {
+            return healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
+
+        public float GetHealthPoints()
+        {
+            return healthPoints;
+        }
+
+        public float GetMaxHealthPoints()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void Die()
@@ -74,5 +109,33 @@ namespace RPG.Resources
            float regenHealthPoints  = GetComponent<BaseStats>().GetStat(Stat.Health) * (regenerationPercentage / 100);
            healthPoints = Mathf.Max(healthPoints, regenHealthPoints);
         }
+
+        public object CaptureState()
+        {
+            return healthPoints;
+        }
+
+        public void RestoreState(object state)
+        {
+            healthPoints = (float) state;
+
+            if (healthPoints == 0)
+            {
+                Die();
+            }
+            
+        }
+
+        // public JToken CaptureAsJToken()
+        // {
+        //     return JToken.FromObject(healthPoints);
+        // }
+
+        // public void RestoreFromJToken(JToken state)
+        // {
+        //     healthPoints = state.ToObject<float>();
+        //     return healthPoints;
+
+        // }
     }
 }
