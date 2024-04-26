@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using RPG.SceneManagement;
 using RPG.Control;
+using Cysharp.Threading.Tasks;
 
 
 namespace RPG.Scenemanagement
@@ -25,44 +26,81 @@ namespace RPG.Scenemanagement
         private void OnTriggerEnter(Collider other) {
             if (other.tag == "Player")
             {
-                StartCoroutine(Transition());
+                //StartCoroutine(Transition());
+                Transition().Forget();
             }
         }
-        private IEnumerator Transition()
+        // private IEnumerator Transition()
+        // {
+        //     if (sceneToLoad < 0)
+        //     {
+        //         Debug.LogError("Scene to load not set.");
+        //         yield break;
+        //     }
+        //     DontDestroyOnLoad(gameObject);
+
+        //     Fader fader = FindObjectOfType<Fader>();
+        //     SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+        //     PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        //     playerController.enabled = false;
+
+        //     yield return fader.FadeOut(fadeOutTime);
+
+        //     savingWrapper.Save();
+
+        //     yield return SceneManager.LoadSceneAsync(sceneToLoad);
+        //     PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        //     newPlayerController.enabled = false;
+
+
+        //     savingWrapper.Load();
+
+        //     Portal otherPortal = GetOtherPortal();
+        //     UpdatePlayer(otherPortal);
+        //     savingWrapper.Save();
+
+        //     yield return new WaitForSeconds(fadeWaitTime);
+        //     fader.FadeIn(fadeInTime);
+
+        //     newPlayerController.enabled = true;
+        //     Destroy(gameObject);
+        // }
+
+         private async UniTaskVoid Transition()
+    {
+        if (sceneToLoad < 0)
         {
-            if (sceneToLoad < 0)
-            {
-                Debug.LogError("Scene to load not set.");
-                yield break;
-            }
-            DontDestroyOnLoad(gameObject);
-
-            Fader fader = FindObjectOfType<Fader>();
-            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
-            PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            playerController.enabled = false;
-
-            yield return fader.FadeOut(fadeOutTime);
-
-            savingWrapper.Save();
-
-            yield return SceneManager.LoadSceneAsync(sceneToLoad);
-            PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            newPlayerController.enabled = false;
-
-
-            savingWrapper.Load();
-
-            Portal otherPortal = GetOtherPortal();
-            UpdatePlayer(otherPortal);
-            savingWrapper.Save();
-
-            yield return new WaitForSeconds(fadeWaitTime);
-            fader.FadeIn(fadeInTime);
-
-            newPlayerController.enabled = true;
-            Destroy(gameObject);
+            Debug.LogError("Scene to load not set.");
+            return;
         }
+        DontDestroyOnLoad(gameObject);
+
+        Fader fader = FindObjectOfType<Fader>();
+        SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+        PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        playerController.enabled = false;
+
+        await fader.FadeOut(fadeOutTime);
+
+        savingWrapper.Save();
+
+        await SceneManager.LoadSceneAsync(sceneToLoad);
+        PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        newPlayerController.enabled = false;
+
+        savingWrapper.Load();
+
+        Portal otherPortal = GetOtherPortal();
+        UpdatePlayer(otherPortal);
+        savingWrapper.Save();
+
+        await UniTask.Delay((int)(fadeWaitTime * 1000));
+
+        await fader.FadeIn(fadeInTime);
+
+        newPlayerController.enabled = true;
+        Destroy(gameObject);
+    }
 
         private void UpdatePlayer(Portal otherPortal)
         {

@@ -1,6 +1,8 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using RPG.Saving;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace RPG.SceneManagement
 {
@@ -10,7 +12,7 @@ namespace RPG.SceneManagement
         
         private void Awake() 
         {
-            StartCoroutine(LoadLastScene());
+           StartCoroutine(LoadLastScene());
         }
 
         private IEnumerator LoadLastScene() {
@@ -21,6 +23,7 @@ namespace RPG.SceneManagement
             yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
             yield return fader.FadeIn(fadeInTime);
         }
+
 
         private void Update() {
             if (Input.GetKeyDown(KeyCode.S))
@@ -40,6 +43,7 @@ namespace RPG.SceneManagement
         {
             GetComponent<SavingSystem>().Load(defaultSaveFile);
         }
+
         public void Save()
         {
             GetComponent<SavingSystem>().Save(defaultSaveFile);
@@ -48,6 +52,8 @@ namespace RPG.SceneManagement
         {
             GetComponent<SavingSystem>().Delete(defaultSaveFile);
         }
+
+        
 
         // [SerializeField] KeyCode saveKey = KeyCode.S;
         // [SerializeField] KeyCode loadKey = KeyCode.L;

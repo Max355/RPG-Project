@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using RPG.Control;
 using RPG.Movement;
 using UnityEngine;
@@ -24,13 +25,21 @@ namespace RPG.Combat
         private void Pickup(Fighter fighter)
         {
             fighter.EquipWeapon(weapon);
-            StartCoroutine(HideForSeconds(respawnTime));
+            HideForSeconds(respawnTime).Forget(); // Forget() suppresses any unhandled exception warnings
+            //StartCoroutine(HideForSeconds(respawnTime));
         }
 
-        private IEnumerator HideForSeconds(float seconds)
+        // private IEnumerator HideForSeconds(float seconds)
+        // {
+        //     ShowPickup(false);
+        //     yield return new WaitForSeconds(seconds);
+        //     ShowPickup(true);
+        // }
+
+        private async UniTaskVoid HideForSeconds(float seconds)
         {
             ShowPickup(false);
-            yield return new WaitForSeconds(seconds);
+            await UniTask.Delay((int)(seconds * 1000)); // Delay for specified seconds
             ShowPickup(true);
         }
 
