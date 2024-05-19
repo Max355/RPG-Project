@@ -18,17 +18,18 @@ namespace RPG.Combat
 
         public bool HandleRaycast(PlayerController callingController)
         { 
-                if (!callingController.GetComponent<Fighter>().CanAttack(gameObject))
-                {
-                    return false;
-                }
+            if (!enabled) return false;
+            if (!callingController.GetComponent<Fighter>().CanAttack(gameObject))
+            {
+                return false;
+            }
 
-                if (Input.GetMouseButtonDown(0))
-                {
-                    callingController.GetComponent<Fighter>().Attack(gameObject);
-                }
+            if (Input.GetMouseButtonDown(0))
+            {
+                callingController.GetComponent<Fighter>().Attack(gameObject);
+            }
 
-                return true;
+            return true;
         }
     }
 }

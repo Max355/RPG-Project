@@ -205,6 +205,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 630439391047826848, guid: 4a8e8105778db084da5e946b2b8a4f0d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 585725853468785161}
+    - targetCorrespondingSourceObject: {fileID: 630439391047826848, guid: 4a8e8105778db084da5e946b2b8a4f0d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5955045289863315583}
   m_SourcePrefab: {fileID: 100100000, guid: 4a8e8105778db084da5e946b2b8a4f0d, type: 3}
 --- !u!4 &1990924825798296117 stripped
 Transform:
@@ -283,6 +286,9 @@ MonoBehaviour:
   - type: 5
     texture: {fileID: 2800000, guid: 8859fce41c5d0a148ad0b7eebfca7fe9, type: 3}
     hotspot: {x: 0, y: 0}
+  - type: 6
+    texture: {fileID: 2800000, guid: 96d4bfdb0d6d8c042bf8fccf6524d239, type: 3}
+    hotspot: {x: 0, y: 0}
   maxNavMeshProjectionDistance: 1
   raycastRadius: 1
 --- !u!114 &585725853468785161
@@ -297,3 +303,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb29fb4cdd4c5e14cb59027fb88888fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5955045289863315583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7515437466485446243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59959a5f0ed21e141b3efe6831f668e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: Splinter
